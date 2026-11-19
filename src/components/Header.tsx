@@ -54,7 +54,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className={classNames('hidden lg:flex flex-1 min-w-0 items-center justify-center gap-4 font-nav text-[12px] font-semibold uppercase leading-[1.4] tracking-[0.3px] whitespace-nowrap', textColor)}>
+        <nav className={classNames('hidden lg:flex flex-1 min-w-0 items-center justify-center gap-4 font-nav text-[9pt] font-semibold uppercase leading-[1.4] tracking-[0.3px] whitespace-nowrap', textColor)}>
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -94,7 +94,7 @@ export default function Header() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden bg-white shadow-xl mt-2 mx-4 rounded-lg overflow-hidden animate-fade-in">
-          <nav className="flex flex-col divide-y divide-gray-100 text-charcoal font-nav text-[12px] font-semibold uppercase leading-[1.4] tracking-[0.3px]">
+          <nav className="flex flex-col divide-y divide-gray-100 text-charcoal font-nav text-[9pt] font-semibold uppercase leading-[1.4] tracking-[0.3px]">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
