@@ -28,7 +28,23 @@ const discoverFallback = {
   })),
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
+function isLocalhostUrl(value: string) {
+  try {
+    const hostname = new URL(value).hostname
+    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]' || hostname === '::1'
+  } catch {
+    return false
+  }
+}
+
+function productionSafeUrl(value?: string) {
+  const url = value?.trim() || ''
+  if (import.meta.env.PROD && isLocalhostUrl(url)) return ''
+  return url.replace(/\/+$/, '')
+}
+
+const API_URL = productionSafeUrl(import.meta.env.VITE_API_URL)
+  || (import.meta.env.DEV ? 'http://localhost:4000/api' : '')
 
 /** Réponse de `POST /bookings/availability`. */
 export interface AvailabilityResult {
@@ -108,6 +124,8 @@ async function request<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
+  if (!API_URL) return { error: 'The content API is not configured.' }
+
   let response: Response
   try {
     response = await fetch(`${API_URL}${endpoint}`, {
@@ -152,10 +170,14 @@ async function withFallback<T>(
   return response
 }
 
-const REQUESTS_API_URL = import.meta.env.VITE_REQUESTS_API_URL || ''
+const REQUESTS_API_URL = productionSafeUrl(import.meta.env.VITE_REQUESTS_API_URL)
 
 /** Envoie une demande de formulaire par e-mail. Lève une erreur si le serveur ne confirme pas l'envoi. */
 export async function sendRequest(type: 'contact' | 'reservation' | 'event', data: object): Promise<void> {
+  if (import.meta.env.PROD && !REQUESTS_API_URL) {
+    throw new Error('The requests API is not configured. Set VITE_REQUESTS_API_URL to the deployed service URL.')
+  }
+
   const response = await fetch(`${REQUESTS_API_URL}/api/requests`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -201,6 +223,8 @@ export const api = {
 }
 
 export async function adminRequest<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
+  if (!API_URL) return { error: 'The content API is not configured.' }
+
   const token = localStorage.getItem('royal-admin-token')
   let response: Response
   try {
@@ -267,6 +291,8 @@ export interface UploadedFile {
  * y inclure la limite (`boundary`) du corps multipart.
  */
 export async function uploadImages(files: File[]): Promise<ApiResponse<UploadedFile[]>> {
+  if (!API_URL) return { error: 'The content API is not configured.' }
+
   const token = localStorage.getItem('royal-admin-token')
   const body = new FormData()
   for (const file of files) body.append('files', file)
@@ -352,6 +378,8 @@ export const adminApi = {
  * On récupère donc le fichier en mémoire avant de déclencher la sauvegarde.
  */
 export async function downloadCsv(endpoint: string, fallbackName: string): Promise<string | null> {
+  if (!API_URL) return 'The content API is not configured.'
+
   const token = localStorage.getItem('royal-admin-token')
   let response: Response
   try {
