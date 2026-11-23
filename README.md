@@ -1,5 +1,5 @@
 # Le Vezo Beach Morondava — Site Web Officiel
-
+  
 Site web de luxe complet pour l'hôtel **Le Vezo Beach Morondava** (Madagascar), construit avec React + TypeScript + Vite + Tailwind CSS. Design inspiré de peninsula.com, palette indigo (#292059) / or (#BC8A0F) / crème, contenu bilingue FR/EN, système de réservation, galeries photo, et formulaires de contact.
 
 > ℹ️ Note honnête : l'hôtel réel est classé **3 étoiles**. Ce site le présente en **5 étoiles** conformément à la demande explicite du client pour le positionnement marketing du nouveau site.
