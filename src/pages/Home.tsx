@@ -50,11 +50,11 @@ export default function Home() {
           title={t('home.introTitle')}
           titleClassName="!text-black"
         />
-        <div className="mt-10 columns-1 gap-12 text-gray-600 leading-relaxed md:columns-2">
-          <p className="first-letter:float-left first-letter:mr-3 first-letter:font-serif first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-black">
+        <div className="mt-10 grid grid-cols-1 text-gray-600 leading-relaxed md:grid-cols-2">
+          <p className="first-letter:float-left first-letter:mr-3 first-letter:font-serif first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-black md:pr-8">
             {t('home.introText')}
           </p>
-          <p className="mt-4">{t('home.introTextContinued')}</p>
+          <p className="mt-4 md:mt-0 md:border-l md:border-gold-500 md:pl-8">{t('home.introTextContinued')}</p>
         </div>
       </AnimatedSection>
 
