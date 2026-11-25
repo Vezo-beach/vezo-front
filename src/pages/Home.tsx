@@ -24,7 +24,7 @@ const highlights = [
 
 const sisterHotels = [
   { key: 'sister1', image: '/images/3.jpg', url: undefined },
-  { key: 'sister2', image: '/images/WhatsApp%20Image%202026-11-02%20at%2011.45.41.jpeg', url: undefined },
+  { key: 'sister2', image: '/images/marina.png', url: undefined },
   { key: 'sister3', image: '/images/images.jpg', url: 'https://hotel-vezobeach.com/' },
 ]
 
